@@ -2,9 +2,9 @@
 
 Using the BVP file exported from the Empatica E4 band, this script uses the `peakutils`, and the standard deviation of R-R intervals to calculate the Heart Rate Variability.
 
-##Usage
+## Usage
 
-Execute the script in the same folder you have all the data exported from your Empatica session.
+Execute the script where you have all the data exported from your Empatica session.
 
 ```
 python empaticaHRV.py
