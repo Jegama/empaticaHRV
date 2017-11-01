@@ -45,29 +45,34 @@ def getRRI(signal, start, sample_rate):
 def getHRV(data, avg_heart_rate):
     rri = np.array(data['IBI']) * 1000
     RR_list = rri.tolist()
-    RR_diff = []
+    #RR_diff = []
     RR_sqdiff = []
     RR_diff_timestamp = []
     cnt = 2
     while (cnt < (len(RR_list)-1)): 
-        RR_diff.append(abs(RR_list[cnt] - RR_list[cnt+1])) 
-        RR_sqdiff.append(math.pow(RR_list[cnt] - RR_list[cnt+1], 2)) 
+        #RR_diff.append(abs(RR_list[cnt+1] - RR_list[cnt])) 
+        RR_sqdiff.append(math.pow(RR_list[cnt+1] - RR_list[cnt], 2)) 
         RR_diff_timestamp.append(data['Timestamp'][cnt])
         cnt += 1
     hrv_window_length = 10
     window_length_samples = int(hrv_window_length*(avg_heart_rate/60))
-    hrv_std_array = []
+    #SDNN = []
+    RMSSD = []
     index = 1
-    for val in RR_diff:
+    for val in RR_sqdiff:
         if index < int(window_length_samples):
-            chunk = RR_diff[:index:]
+            #SDNNchunk = RR_diff[:index:]
+            RMSSDchunk = RR_sqdiff[:index:]
         else:
-            chunk = RR_diff[(index-window_length_samples):index:]
-        hrv_std_array.append(np.std(chunk))
+            #SDNNchunk = RR_diff[(index-window_length_samples):index:]
+            RMSSDchunk = RR_sqdiff[(index-window_length_samples):index:]
+        #SDNN.append(np.std(SDNNchunk))
+        RMSSD.append(math.sqrt(np.std(RMSSDchunk)))
         index += 1
     dt = np.dtype('Float64')
-    hrv_std_array = np.array(hrv_std_array, dtype=dt)
-    df = pd.DataFrame({'Timestamp': RR_diff_timestamp, 'HRV': hrv_std_array})
+    #SDNN = np.array(SDNN, dtype=dt)
+    RMSSD = np.array(RMSSD, dtype=dt)
+    df = pd.DataFrame({'Timestamp': RR_diff_timestamp, 'HRV': RMSSD})
     return df
 
 BVP_DF = pd.read_csv('BVP.csv')
