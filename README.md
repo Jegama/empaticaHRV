@@ -2,7 +2,7 @@
 
 Using the BVP file exported from the Empatica E4 band, this script uses the `peakutils`, and the Root Mean Square of the Successive Differences (RMSSD) to calculate the Heart Rate Variability, based on the next formula:
 
-$\sqrt{\frac{1}{N-1}\sum_{i=1}^{N-1}((R - R)_{i+1}-(R - R)_i)^2}$
+<img src="https://latex.codecogs.com/gif.latex?$$\sqrt{\frac{1}{N-1}\left(\sum_{i=1}^{N-1}\Big((R&space;-&space;R)_{i&plus;1}-(R&space;-&space;R)_i\Big)^2\right)}$$" title="$$\sqrt{\frac{1}{N-1}\left(\sum_{i=1}^{N-1}\Big((R - R)_{i+1}-(R - R)_i\Big)^2\right)}$$" />
 
 
 ## Usage
